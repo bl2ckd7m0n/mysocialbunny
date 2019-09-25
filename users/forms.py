@@ -11,37 +11,40 @@ from users.models import Profile
 class SignupForm(forms.Form):
     """Sign up form."""
 
-    username = forms.CharField(min_length=4, max_length=50,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'Username'})
-                               )
+    username = forms.CharField(
+        min_length=4, 
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
+    )
 
     password = forms.CharField(
         max_length=70,
-        widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'Password'})
-    )
-    password_confirmation = forms.CharField(
-        max_length=70,
-        widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'Password confirmation'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
     )
 
-    first_name = forms.CharField(min_length=2, max_length=50,
-                                 widget=forms.TextInput(
-                                     attrs={'class': 'form-control', 'placeholder': 'First name'})
-                                 )
-    last_name = forms.CharField(min_length=2, max_length=50,
-                                widget=forms.TextInput(
-                                    attrs={'class': 'form-control', 'placeholder': 'Last name'})
-                                )
+    password_confirmation = forms.CharField(
+        max_length=70,
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password confirmation'})
+    )
+
+    first_name = forms.CharField(
+        min_length=2, 
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'})
+    )
+
+    last_name = forms.CharField(
+        min_length=2, 
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'})
+    )
 
     email = forms.CharField(
         min_length=6,
         max_length=70,
-        widget=forms.EmailInput(
-            attrs={'class': 'form-control', 'placeholder': 'Email address'})
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'})
     )
+
 
     def clean_username(self):
         """Username must be unique."""
@@ -73,10 +76,16 @@ class SignupForm(forms.Form):
         profile.save()
 
 
-class ProfileForm(forms.Form):
-    """Profile form."""
+class ProfileForm(forms.ModelForm):
+    """Profile model form."""
 
-    website = forms.URLField(max_length=200, required=True)
-    biography = forms.CharField(max_length=500, required=False)
-    phone_number = forms.CharField(max_length=20, required=False)
-    picture = forms.ImageField()
+    website = forms.URLField(max_length=200,required=True)
+    biography = forms.CharField(max_length=500,required=True)
+    phone_number = forms.CharField(max_length=20,required=True)
+    picture = forms.ImageField(required=True)
+
+    class Meta:
+        """Form settings."""
+
+        model = Profile
+        fields = ['website', 'biography', 'phone_number', 'picture']
