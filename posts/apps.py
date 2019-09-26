@@ -7,4 +7,4 @@ class PostsConfig(AppConfig):
     """Posts application settings."""
 
     name = 'posts'
-    varbose_name = 'Posts'
+    verbose_name = 'Posts'
